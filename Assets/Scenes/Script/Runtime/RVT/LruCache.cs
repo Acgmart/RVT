@@ -12,7 +12,7 @@ namespace VirtualTexture
             public NodeInfo Prev { get; set; }
         }
 
-        private NodeInfo [] allNodes;
+        private NodeInfo[] allNodes;
         private NodeInfo head = null;
         private NodeInfo tail = null;
 
@@ -21,7 +21,7 @@ namespace VirtualTexture
         public void Init(int count)
         {
             allNodes = new NodeInfo[count];
-            for (int i= 0;i < count;i++)
+            for (int i = 0; i < count; i++)
             {
                 allNodes[i] = new NodeInfo()
                 {
@@ -43,7 +43,7 @@ namespace VirtualTexture
                 return false;
 
             var node = allNodes[id];
-            if(node == tail)
+            if (node == tail)
             {
                 return true;
             }

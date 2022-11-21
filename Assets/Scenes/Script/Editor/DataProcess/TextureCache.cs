@@ -27,7 +27,7 @@ namespace VirtualTexture
             m_FileName = name;
 
             var fileSize = Size * PixelSize;
-            for(int row = 0; row < Size; row++)
+            for (int row = 0; row < Size; row++)
             {
                 using (var file = File.Open(GetFilePath(row), FileMode.OpenOrCreate, FileAccess.Write))
                 {
@@ -39,58 +39,58 @@ namespace VirtualTexture
             }
         }
 
-		public void SetPixels(int x, int y, int blockWidth, int blockHeight, byte[] colors)
+        public void SetPixels(int x, int y, int blockWidth, int blockHeight, byte[] colors)
         {
-			for (int row = 0; row < blockHeight; row++)
+            for (int row = 0; row < blockHeight; row++)
             {
                 using (var writer = new BinaryWriter(File.Open(GetFilePath(row + y), FileMode.Open, FileAccess.Write)))
                 {
                     writer.Seek(x * PixelSize, SeekOrigin.Begin);
-					writer.Write(colors, row * blockWidth * PixelSize, blockWidth * PixelSize);
+                    writer.Write(colors, row * blockWidth * PixelSize, blockWidth * PixelSize);
                 }
             }
         }
 
-		public byte[] GetPixels(int x, int y, int blockWidth, int blockHeight)
+        public byte[] GetPixels(int x, int y, int blockWidth, int blockHeight)
         {
-			var pixels = new byte[blockWidth * blockHeight * PixelSize];
+            var pixels = new byte[blockWidth * blockHeight * PixelSize];
 
             for (int i = 0; i < blockHeight; i++)
             {
                 var row = Mathf.Clamp(i + y, 0, Size - 1);
                 using (var reader = new BinaryReader(File.Open(GetFilePath(row), FileMode.Open, FileAccess.Read)))
                 {
-					GetPixels(x, blockWidth, reader, pixels, i * blockWidth * PixelSize);
+                    GetPixels(x, blockWidth, reader, pixels, i * blockWidth * PixelSize);
                 }
             }
 
             return pixels;
         }
 
-		private void GetPixels(int x, int blockWidth, BinaryReader reader, byte[] pixels, int pixelOffset)
+        private void GetPixels(int x, int blockWidth, BinaryReader reader, byte[] pixels, int pixelOffset)
         {
-			var begin = Mathf.Clamp(x, 0, Size - 1);
-			var width = Mathf.Min(blockWidth + x - begin, Size - begin);
+            var begin = Mathf.Clamp(x, 0, Size - 1);
+            var width = Mathf.Min(blockWidth + x - begin, Size - begin);
 
-			reader.BaseStream.Seek(begin * PixelSize, SeekOrigin.Begin);
-			var buf = reader.ReadBytes(width * PixelSize);
-			Buffer.BlockCopy(buf, 0, pixels, pixelOffset + (begin - x) * PixelSize, buf.Length);
+            reader.BaseStream.Seek(begin * PixelSize, SeekOrigin.Begin);
+            var buf = reader.ReadBytes(width * PixelSize);
+            Buffer.BlockCopy(buf, 0, pixels, pixelOffset + (begin - x) * PixelSize, buf.Length);
 
-			if(x < 0)
-			{
-				for(int i = 0; i < begin - x; i++)
-				{
-					Buffer.BlockCopy(buf, 0, pixels, pixelOffset + i * PixelSize, PixelSize);
-				}
-			}
+            if (x < 0)
+            {
+                for (int i = 0; i < begin - x; i++)
+                {
+                    Buffer.BlockCopy(buf, 0, pixels, pixelOffset + i * PixelSize, PixelSize);
+                }
+            }
 
-			if(width < blockWidth)
-			{
-				for(int i = 0; i < blockWidth - width; i++)
-				{
-					Buffer.BlockCopy(buf, buf.Length - PixelSize, pixels, pixelOffset + (width + i) * PixelSize, PixelSize);
-				}
-			}
+            if (width < blockWidth)
+            {
+                for (int i = 0; i < blockWidth - width; i++)
+                {
+                    Buffer.BlockCopy(buf, buf.Length - PixelSize, pixels, pixelOffset + (width + i) * PixelSize, PixelSize);
+                }
+            }
         }
     }
 }

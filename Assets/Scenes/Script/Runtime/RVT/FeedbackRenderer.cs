@@ -5,17 +5,17 @@ using UnityEngine.Rendering;
 
 namespace VirtualTexture
 {
-	/// <summary>
-	/// 预渲染器类.
-	/// 预渲染器使用特定的着色器渲染场景，获取当前场景用到的的虚拟贴图相关信息(页表/mipmap等级等)
-	/// </summary>
+    /// <summary>
+    /// 预渲染器类.
+    /// 预渲染器使用特定的着色器渲染场景，获取当前场景用到的的虚拟贴图相关信息(页表/mipmap等级等)
+    /// </summary>
     public class FeedbackRenderer : MonoBehaviour
-	{
-		/// <summary>
-		/// 渲染目标缩放比例
-		/// </summary>
-		[SerializeField]
-		private ScaleFactor m_Scale = default;
+    {
+        /// <summary>
+        /// 渲染目标缩放比例
+        /// </summary>
+        [SerializeField]
+        private ScaleFactor m_Scale = default;
 
         /// <summary>
         /// mipmap层级偏移
@@ -28,21 +28,21 @@ namespace VirtualTexture
         /// </summary>
         public Camera FeedbackCamera { get; set; }
 
-		/// <summary>
-		/// 获取预渲染的贴图
-		/// </summary>
+        /// <summary>
+        /// 获取预渲染的贴图
+        /// </summary>
         public RenderTexture TargetTexture { get; private set; }
 
         private void Start()
-		{
-			InitCamera();
+        {
+            InitCamera();
         }
 
-		/// <summary>
-		/// 初始化摄像机
-		/// </summary>
-		private void InitCamera()
-		{
+        /// <summary>
+        /// 初始化摄像机
+        /// </summary>
+        private void InitCamera()
+        {
             var mainCamera = Camera.main;
             if (mainCamera == null)
                 return;
@@ -81,24 +81,24 @@ namespace VirtualTexture
 
             // 渲染前先拷贝主摄像机的相关参数
             CopyCamera(mainCamera);
-		}
+        }
 
-		/// <summary>
-		/// 拷贝摄像机参数
-		/// </summary>
-		private void CopyCamera(Camera camera)
-		{
-			if(camera == null)
-				return;
+        /// <summary>
+        /// 拷贝摄像机参数
+        /// </summary>
+        private void CopyCamera(Camera camera)
+        {
+            if (camera == null)
+                return;
 
-			// Unity的Camera.CopyFrom方法会拷贝全部摄像机参数，这不是我们想要的，所以要自己写.
-			//m_FeedbackCamera.transform.position = camera.transform.position;
-			//m_FeedbackCamera.transform.rotation = camera.transform.rotation;
-			//m_FeedbackCamera.cullingMask = camera.cullingMask;
-			//m_FeedbackCamera.projectionMatrix = camera.projectionMatrix;
-			FeedbackCamera.fieldOfView = camera.fieldOfView;
-			FeedbackCamera.nearClipPlane = camera.nearClipPlane;
-			FeedbackCamera.farClipPlane = camera.farClipPlane;
-		}
+            // Unity的Camera.CopyFrom方法会拷贝全部摄像机参数，这不是我们想要的，所以要自己写.
+            //m_FeedbackCamera.transform.position = camera.transform.position;
+            //m_FeedbackCamera.transform.rotation = camera.transform.rotation;
+            //m_FeedbackCamera.cullingMask = camera.cullingMask;
+            //m_FeedbackCamera.projectionMatrix = camera.projectionMatrix;
+            FeedbackCamera.fieldOfView = camera.fieldOfView;
+            FeedbackCamera.nearClipPlane = camera.nearClipPlane;
+            FeedbackCamera.farClipPlane = camera.farClipPlane;
+        }
     }
 }

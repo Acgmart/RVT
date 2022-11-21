@@ -25,16 +25,16 @@ namespace VirtualTexture
             Cell = new TableNodeCell[NodeCellCount, NodeCellCount];
             for (int i = 0; i < NodeCellCount; i++)
             {
-                for(int j = 0; j < NodeCellCount; j++)
+                for (int j = 0; j < NodeCellCount; j++)
                 {
-                    Cell[i,j] = new TableNodeCell(i * PerCellSize, 
-                                                  j * PerCellSize, 
+                    Cell[i, j] = new TableNodeCell(i * PerCellSize,
+                                                  j * PerCellSize,
                                                   PerCellSize, PerCellSize, MipLevel);
                 }
             }
         }
 
-        public void ChangeViewRect(Vector2Int offset,Action<Vector2Int> InvalidatePage)
+        public void ChangeViewRect(Vector2Int offset, Action<Vector2Int> InvalidatePage)
         {
             if (Mathf.Abs(offset.x) >= NodeCellCount || Mathf.Abs(offset.y) > NodeCellCount ||
                 offset.x % PerCellSize != 0 || offset.y % PerCellSize != 0)
@@ -54,9 +54,9 @@ namespace VirtualTexture
             #region clip map
             if (offset.x > 0)
             {
-                for(int i = 0;i < offset.x; i++)
+                for (int i = 0; i < offset.x; i++)
                 {
-                    for (int j = 0;j < NodeCellCount;j++)
+                    for (int j = 0; j < NodeCellCount; j++)
                     {
                         var transXY = GetTransXY(i, j);
                         Cell[transXY.x, transXY.y].Payload.LoadRequest = null;
@@ -64,9 +64,9 @@ namespace VirtualTexture
                     }
                 }
             }
-            else if(offset.x < 0)
+            else if (offset.x < 0)
             {
-                for(int i = 1; i <= -offset.x; i++)
+                for (int i = 1; i <= -offset.x; i++)
                 {
                     for (int j = 0; j < NodeCellCount; j++)
                     {
@@ -102,7 +102,7 @@ namespace VirtualTexture
             }
             #endregion
             pageOffset += offset;
-            while(pageOffset.x < 0)
+            while (pageOffset.x < 0)
             {
                 pageOffset.x += NodeCellCount;
             }
@@ -128,7 +128,7 @@ namespace VirtualTexture
 
         public RectInt GetInverRect(RectInt rect)
         {
-            return new RectInt( rect.xMin - pageOffset.x,
+            return new RectInt(rect.xMin - pageOffset.x,
                                 rect.yMin - pageOffset.y,
                                 rect.width,
                                 rect.height);
@@ -149,7 +149,7 @@ namespace VirtualTexture
 
         public int MipLevel { get; }
 
-        public TableNodeCell(int x, int y, int width, int height,int mip)
+        public TableNodeCell(int x, int y, int width, int height, int mip)
         {
             Rect = new RectInt(x, y, width, height);
             MipLevel = mip;

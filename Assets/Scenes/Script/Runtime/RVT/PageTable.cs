@@ -8,12 +8,12 @@ using UnityEngine.Rendering;
 namespace VirtualTexture
 {
     public class PageTable : MonoBehaviour
-	{
-		/// <summary>
-		/// 页表尺寸.
-		/// </summary>
-		[SerializeField]
-		private int m_TableSize = default;
+    {
+        /// <summary>
+        /// 页表尺寸.
+        /// </summary>
+        [SerializeField]
+        private int m_TableSize = default;
 
         /// <summary>
         /// 调试着色器.
@@ -67,15 +67,15 @@ namespace VirtualTexture
         public int TableSize { get { return m_TableSize; } }
 
         public bool UseFeed { get; set; } = true;
-		/// <summary>
-		/// 最大mipmap等级
-		/// </summary>
-		public int MaxMipLevel { get { return (int)Mathf.Log(TableSize, 2); } }
+        /// <summary>
+        /// 最大mipmap等级
+        /// </summary>
+        public int MaxMipLevel { get { return (int)Mathf.Log(TableSize, 2); } }
 
         private Material drawLookupMat = null;
         private Mesh mQuad;
 
-        public void Init(RenderTextureJob job,int tileCount)
+        public void Init(RenderTextureJob job, int tileCount)
         {
             m_RenderTextureJob = job;
             m_RenderTextureJob.StartRenderJob += OnRenderJob;
@@ -117,10 +117,10 @@ namespace VirtualTexture
         {
             for (int i = 0; i <= MaxMipLevel; i++)
             {
-                for(int j=0;j<m_PageTable[i].NodeCellCount;j++)
+                for (int j = 0; j < m_PageTable[i].NodeCellCount; j++)
                     for (int k = 0; k < m_PageTable[i].NodeCellCount; k++)
                     {
-                        InvalidatePage(m_PageTable[i].Cell[j,k].Payload.TileIndex);
+                        InvalidatePage(m_PageTable[i].Cell[j, k].Payload.TileIndex);
                     }
             }
             m_ActivePages.Clear();
@@ -138,7 +138,7 @@ namespace VirtualTexture
 
         public void UpdatePage(Vector2Int center)
         {
-            if(this.UseFeed)
+            if (this.UseFeed)
             {
                 return;
             }
@@ -203,7 +203,7 @@ namespace VirtualTexture
             {
                 ActivatePage(c.r, c.g, c.b);
             }
-            
+
             this.UpdateLookup();
         }
 
@@ -240,39 +240,41 @@ namespace VirtualTexture
                     lb.y += TableSize;
                 }
 
-                drawList.Add(new DrawPageInfo() {
+                drawList.Add(new DrawPageInfo()
+                {
                     rect = new Rect(lb.x, lb.y, page.Rect.width, page.Rect.height),
                     mip = page.MipLevel,
                     drawPos = new Vector2((float)page.Payload.TileIndex.x / 255,
                     (float)page.Payload.TileIndex.y / 255),
                 });
             }
-            drawList.Sort((a,b) => {
+            drawList.Sort((a, b) =>
+            {
                 return -(a.mip.CompareTo(b.mip));
             });
-            if(drawList.Count == 0)
+            if (drawList.Count == 0)
             {
                 return;
             }
 
             var mats = new Matrix4x4[drawList.Count];
             var pageInfos = new Vector4[drawList.Count];
-            for(int i=0;i<drawList.Count;i++)
+            for (int i = 0; i < drawList.Count; i++)
             {
                 float size = drawList[i].rect.width / TableSize;
                 mats[i] = Matrix4x4.TRS(
-                    new Vector3(drawList[i].rect.x / TableSize, drawList[i].rect.y / TableSize), 
+                    new Vector3(drawList[i].rect.x / TableSize, drawList[i].rect.y / TableSize),
                     Quaternion.identity,
                     new Vector3(size, size, size));
 
-                pageInfos[i] = new Vector4(drawList[i].drawPos.x, drawList[i].drawPos.y, drawList[i].mip / 255f,0);
+                pageInfos[i] = new Vector4(drawList[i].drawPos.x, drawList[i].drawPos.y, drawList[i].mip / 255f, 0);
             }
             Graphics.SetRenderTarget(m_LookupTexture);
             var tempCB = new CommandBuffer();
             var block = new MaterialPropertyBlock();
             block.SetVectorArray("_PageInfo", pageInfos);
             block.SetMatrixArray("_ImageMVP", mats);
-            tempCB.DrawMeshInstanced(mQuad, 0, drawLookupMat,0, mats, mats.Length, block);
+            tempCB.DrawMeshInstanced(mQuad, 0, drawLookupMat, 0, mats, mats.Length, block);
             Graphics.ExecuteCommandBuffer(tempCB);
             UpdateDebugTexture();
         }
@@ -286,16 +288,16 @@ namespace VirtualTexture
                 return null;
             // 找到当前页表
             var page = m_PageTable[mip].Get(x, y);
-            if(page == null)
+            if (page == null)
             {
                 return null;
             }
-            if(!page.Payload.IsReady)
+            if (!page.Payload.IsReady)
             {
                 LoadPage(x, y, page);
 
                 //向上找到最近的父节点
-                while(mip < MaxMipLevel && !page.Payload.IsReady)
+                while (mip < MaxMipLevel && !page.Payload.IsReady)
                 {
                     mip++;
                     page = m_PageTable[mip].Get(x, y);
@@ -322,11 +324,11 @@ namespace VirtualTexture
                 return;
 
             // 正在加载中,不需要重复请求
-			if(node.Payload.LoadRequest != null)
-				return;
+            if (node.Payload.LoadRequest != null)
+                return;
 
             // 新建加载请求
-			node.Payload.LoadRequest = m_RenderTextureJob.Request(x, y, node.MipLevel);
+            node.Payload.LoadRequest = m_RenderTextureJob.Request(x, y, node.MipLevel);
         }
 
         /// <summary>
@@ -336,10 +338,10 @@ namespace VirtualTexture
         {
             // 找到对应页表
             var node = m_PageTable[request.MipLevel].Get(request.PageX, request.PageY);
-			if (node == null || node.Payload.LoadRequest != request)
+            if (node == null || node.Payload.LoadRequest != request)
                 return;
 
-			node.Payload.LoadRequest = null;
+            node.Payload.LoadRequest = null;
 
             var id = m_TileTexture.RequestTile();
             m_TileTexture.UpdateTile(id, request);

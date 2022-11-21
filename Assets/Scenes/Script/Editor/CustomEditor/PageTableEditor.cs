@@ -7,11 +7,11 @@ using UnityEngine;
 namespace VirtualTexture
 {
     [CustomEditor(typeof(PageTable))]
-	public class PageTableEditor : EditorBase
+    public class PageTableEditor : EditorBase
     {
         protected override void OnPlayingInspectorGUI()
         {
-			var table = (PageTable)target;
+            var table = (PageTable)target;
             DrawTexture(table.DebugTexture, "Lookup Texture");
         }
 

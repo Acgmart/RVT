@@ -6,9 +6,9 @@ namespace VirtualTexture
 {
     [CustomEditor(typeof(RVTTerrain))]
     public class RVTTerrainEditor : Editor
-	{
+    {
         public override void OnInspectorGUI()
-		{
+        {
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("ShowTerrain"))
             {
@@ -21,7 +21,7 @@ namespace VirtualTexture
             if (GUILayout.Button("ShowMipMap"))
             {
                 var terrain = (RVTTerrain)target;
-                foreach(var ter in terrain.TerrainList)
+                foreach (var ter in terrain.TerrainList)
                 {
                     ter.materialTemplate.EnableKeyword("_SHOWRVTMIPMAP");
                 }
@@ -39,5 +39,5 @@ namespace VirtualTexture
                 terrain.PageTable.UseFeed = terrain.UseFeed;
             }
         }
-	}
+    }
 }

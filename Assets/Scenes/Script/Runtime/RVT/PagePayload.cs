@@ -6,8 +6,8 @@ namespace VirtualTexture
     /// 页表数据
     /// </summary>
     public class PagePayload
-	{
-		private static Vector2Int s_InvalidTileIndex = new Vector2Int(-1, -1);
+    {
+        private static Vector2Int s_InvalidTileIndex = new Vector2Int(-1, -1);
 
         /// <summary>
         /// 对应平铺贴图中的id
@@ -34,7 +34,7 @@ namespace VirtualTexture
         /// </summary>
         public void ResetTileIndex()
         {
-			TileIndex = s_InvalidTileIndex;
+            TileIndex = s_InvalidTileIndex;
         }
     }
 }

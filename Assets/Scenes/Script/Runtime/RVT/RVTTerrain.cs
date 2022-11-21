@@ -59,7 +59,7 @@ namespace VirtualTexture
             PageTable.UseFeed = UseFeed;
             changeViewDis = ScaleModeExtensions.ToFloat(ChangeViewDis) * 2 * Radius;
             var fixedCenter = GetFixedCenter(GetFixedPos(transform.position));
-            RealTotalRect = new Rect(fixedCenter.x - Radius, fixedCenter.y - Radius, 2 * Radius,2 * Radius);
+            RealTotalRect = new Rect(fixedCenter.x - Radius, fixedCenter.y - Radius, 2 * Radius, 2 * Radius);
             rtJob = new RenderTextureJob();
             tiledTex = GetComponent<TiledTexture>();
             PageTable.Init(rtJob, tiledTex.RegionSize.x * tiledTex.RegionSize.y);
@@ -123,7 +123,7 @@ namespace VirtualTexture
                     if (this.UseFeed)
                     {
                         feedbackRender.FeedbackCamera.Render();
-                        feedbackReader.NewRequest(feedbackRender.TargetTexture,true);
+                        feedbackReader.NewRequest(feedbackRender.TargetTexture, true);
                         feedbackReader.UpdateRequest();
                         rtJob.Update();
                         feedbackReader.UpdateRequest();
@@ -164,7 +164,7 @@ namespace VirtualTexture
             y = y - y % perSize;
             var tableSize = PageTable.TableSize;
             var paddingEffect = tiledTex.PaddingSize * perSize * (RealTotalRect.width / tableSize) / tiledTex.TileSize;
-            var realRect = new Rect( RealTotalRect.xMin + (float)x / tableSize * RealTotalRect.width - paddingEffect,
+            var realRect = new Rect(RealTotalRect.xMin + (float)x / tableSize * RealTotalRect.width - paddingEffect,
                                      RealTotalRect.yMin + (float)y / tableSize * RealTotalRect.height - paddingEffect,
                                      RealTotalRect.width / tableSize * perSize + 2f * paddingEffect,
                                      RealTotalRect.width / tableSize * perSize + 2f * paddingEffect);
@@ -194,7 +194,7 @@ namespace VirtualTexture
                                         needDrawRect.width * scaleFactor,
                                         needDrawRect.height * scaleFactor);
                 var scaleOffset = new Vector4(
-                                        needDrawRect.width / terRect.width, 
+                                        needDrawRect.width / terRect.width,
                                         needDrawRect.height / terRect.height,
                                         (needDrawRect.xMin - terRect.xMin) / terRect.width,
                                         (needDrawRect.yMin - terRect.yMin) / terRect.height);
@@ -220,7 +220,7 @@ namespace VirtualTexture
                 {
                     m_DrawTextureMateral.SetTexture("_Blend", alphamap);
                     int index = 1;
-                    for(;layerIndex < ter.terrainData.terrainLayers.Length && index <= 4;layerIndex ++)
+                    for (; layerIndex < ter.terrainData.terrainLayers.Length && index <= 4; layerIndex++)
                     {
                         var layer = ter.terrainData.terrainLayers[layerIndex];
                         var nowScale = new Vector2(ter.terrainData.size.x / layer.tileSize.x,
@@ -251,7 +251,7 @@ namespace VirtualTexture
             PageTable.Reset();
         }
 
-        private Vector2Int GetPageSector(Vector2 pos,Rect realRect)
+        private Vector2Int GetPageSector(Vector2 pos, Rect realRect)
         {
             var sector = new Vector2Int((int)pos.x, (int)pos.y) -
                 new Vector2Int((int)realRect.xMin, (int)realRect.yMin);
