@@ -5,14 +5,14 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
-      "version": "1.0.0",
-      "depth": 1,
+      "version": "1.0.5",
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
       "version": "2.0.7",
@@ -21,56 +21,57 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.1"
       },
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
       "version": "2.0.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
       "version": "1.2.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "8.2.0",
+      "version": "8.3.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.universal": {
-      "version": "file:com.unity.render-pipelines.universal@8.2.0",
+      "version": "8.2.0",
       "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
         "com.unity.render-pipelines.core": "8.2.0",
         "com.unity.shadergraph": "8.2.0"
-      }
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.searcher": {
       "version": "4.0.9",
       "depth": 2,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "8.2.0",
+      "version": "8.3.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.render-pipelines.core": "8.2.0",
+        "com.unity.render-pipelines.core": "8.3.1",
         "com.unity.searcher": "4.0.9"
       },
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
       "version": "1.1.16",
@@ -81,7 +82,7 @@
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
       "version": "3.0.1",
@@ -90,7 +91,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
       "version": "1.4.3",
@@ -102,7 +103,7 @@
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
-      "url": "https://packages.unity.cn"
+      "url": "https://packages.unity.com"
     },
     "com.unity.ugui": {
       "version": "1.0.0",
